@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition :name="transitionName" >  
-      <router-view class="child-view" :class="headerShow == true ? 'topClass' : ''"></router-view>  
+      <router-view class="child-view"></router-view>  
     </transition>  
   </div>
 </template>
@@ -12,6 +12,7 @@ export default {
     data() {
         return {
         transitionName: "slide-left",
+       
         };
     },
     watch: {

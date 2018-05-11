@@ -3,7 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios'
+Vue.prototype.$http = axios
+Vue.prototype.$http.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 
+import qs from 'qs'
+Vue.prototype.$qs = qs
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

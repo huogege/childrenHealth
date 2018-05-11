@@ -5,11 +5,13 @@
             <img src="./bmg_1.png" alt="">
         </div>
         <div class="qurry">
-            <div class="cell">
-                <div class=" icon icon_6"></div>
-                <div class="word border">孕保查询</div>
-            </div>
-            <router-link class="router_link" :to="{ path: 'GravidaQurry', query: {}}">
+            <router-link class="router_link" :to="{ path: 'GravidaQurry', query: {type:1}}">
+                <div class="cell">
+                    <div class=" icon icon_6"></div>
+                    <div class="word border">孕保查询</div>
+                </div>
+            </router-link>
+            <router-link class="router_link" :to="{ path: 'GravidaQurry', query: {type:2}}">
                 <div class="cell">
                     <div class="icon icon_7"></div>
                     <div class="word">儿保查询</div>
@@ -19,94 +21,82 @@
       <div class="tool">
         <div class="title">常用工具</div>
         <div class="wrapper">
-            <div class="cell">
+            <div class="cell" @click="jump('http://www.zaichongqing.com/lj_portal/public/tool/html/index.html')">
                 <div class="icon icon_9"></div>
                 <div class="word">孕产期计算</div>
             </div>
-            <div class="cell">
+            <div class="cell" @click="jump('http://www.zaichongqing.com/lj_portal/public/tool/html/safe_date.html')">
                 <div class="icon icon_10"></div>
                 <div class="word">安全期计算</div>
             </div>
-            <div class="cell">
+            <div class="cell" @click="jump('http://www.zaichongqing.com/lj_portal/public/vaccineNew/jjindex.jsp')">
                 <div class="icon icon_11"></div>
                 <div class="word">疫苗接种助手</div>
             </div>
-            <div class="cell">
+            <div class="cell" @click="jump('http://www.zaichongqing.com/lj_portal/public/tool/html/height_test.html')">
                 <div class="icon icon_12"></div>
                 <div class="word">儿童身高预测</div>
             </div>
         </div>
       </div>
       <div class="content">
-        <div class="wrapper">
-            <div class="title title_1">孕产妇健康<span class="more">...</span></div>
-            <div class="main clearfix">
-                <router-link :to="{ path: 'GravidaQurry', query: {}}">
-                    <div class="cell">
-                        <div class="img"><img src="./img1.png" alt=""></div>
-                        <div class="word">文字文字文字文字文字文字文字文字文字文字文字文字文字文字</div>
-                    </div>
-                </router-link>
-                <router-link :to="{ path: 'GravidaQurry', query: {}}">
-                    <div class="cell">
-                        <div class="img"><img src="./img1.png" alt=""></div>
-                        <div class="word">文字文字文字文字文字文字文字文字文字文字文字文字文字文字</div>
-                    </div>
-                </router-link>
-                <router-link :to="{ path: 'GravidaQurry', query: {}}">
-                    <div class="cell">
-                        <div class="img"><img src="./img1.png" alt=""></div>
-                        <div class="word">文字文字文字文字文字文字文字文字文字文字文字文字文字文字</div>
-                    </div>
-                </router-link>
-                <router-link :to="{ path: 'GravidaQurry', query: {}}">
-                    <div class="cell">
-                        <div class="img"><img src="./img1.png" alt=""></div>
-                        <div class="word">文字文字文字文字文字文字文字文字文字文字文字文字文字文字</div>
-                    </div>
-                </router-link>
-            </div>
-        </div>
-         <div class="wrapper">
-            <div class="title title_2">儿童保健知识<span class="more">...</span></div>
-            <div class="main clearfix">
-                <router-link :to="{ path: 'GravidaQurry', query: {}}">
-                    <div class="cell">
-                        <div class="img"><img src="./img1.png" alt=""></div>
-                        <div class="word">文字文字文字文字文字文字文字文字文字文字文字文字文字文字</div>
-                    </div>
-                </router-link>
-                <router-link :to="{ path: 'GravidaQurry', query: {}}">
-                    <div class="cell">
-                        <div class="img"><img src="./img1.png" alt=""></div>
-                        <div class="word">文字文字文字文字文字文字文字文字文字文字文字文字文字文字</div>
-                    </div>
-                </router-link>
-                <router-link :to="{ path: 'GravidaQurry', query: {}}">
-                    <div class="cell">
-                        <div class="img"><img src="./img1.png" alt=""></div>
-                        <div class="word">文字文字文字文字文字文字文字文字文字文字文字文字文字文字</div>
-                    </div>
-                </router-link>
-                <router-link :to="{ path: 'GravidaQurry', query: {}}">
-                    <div class="cell">
-                        <div class="img"><img src="./img1.png" alt=""></div>
-                        <div class="word">文字文字文字文字文字文字文字文字文字文字文字文字文字文字</div>
-                    </div>
-                </router-link>
-            </div>
-        </div>
+          <List :type="1" :logo="logo1" :list="womenList" :titleName="'妇保健康知识'" :titleClass="'title_2'"></List>
+          <List :type="2" :logo="logo2" :list="childList" :titleName="'儿保健康知识'" :titleClass="'title_1'"></List>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import fn from '../../common/js/index.js'
+import url from "../../common/js/url.js"
+import list from "../list/index.vue"
+const URL = url.url1;
 export default {
-  name: "Index",
-  data() {
-    return {};
-  }
+    name: "Index",
+    components:{
+        List:list
+    },
+    data() {
+        return {
+            womenList:[],
+            childList:[],
+            logo1: 'this.src="' + require('./img1.png') + '"' ,             //避免找不到本地图片
+            logo2: 'this.src="' + require('./img2.jpg') + '"'              //避免找不到本地图片
+        };
+    },
+    methods:{
+        jump(url){
+            window.location.href = url;
+        },
+        request(type,callback){
+            let _this = this;
+            this.$http.post(URL + 'jkContentList',this.$qs.stringify({
+                type:type,   //妇保
+                page:1,
+                num:4,
+            }))
+            .then(function(res){
+                let response = res.data;
+
+                if(response.rtnCode == "0000"){
+                    if(response.data && response.data.list.list.length>0){
+                       callback(response.data.list.list);     
+                      
+                    }
+                }
+            })           
+        }
+    },
+    created(){
+        let _this = this;
+        _this.request(1,function(data){
+           _this.womenList = data;         
+        });
+         _this.request(2,function(data){
+           _this.childList = data;         
+        });
+    }
 };
 </script>
 
@@ -213,54 +203,6 @@ export default {
     }
     .content {
         background-color: #fff;
-        .wrapper {
-            margin-bottom: 20px;
-            .title {
-                position: relative;
-                height: 40px;
-                line-height: 40px;
-                font-size: 11px;
-                color: #6d6d6d;
-                background-size: 10px 10px;
-                background-repeat: no-repeat;
-                background-position: 30px;
-                text-indent: 50px;
-                .more {
-                position: absolute;
-                top: -8px;
-                right: 20px;
-                font-size: 30px;
-                color: #00a0a8;
-                }
-            }
-            .title_1 {
-                background-image: url("./icon_8.png");
-            }
-            .title_2 {
-                background-image: url("./icon_14.png");
-            }
-            .main {
-                .cell {
-                    width: 50%;
-                    float: left;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    align-content: center;
-                    .img {
-                        img {
-                            width: 140px;
-                        }
-                    }
-                    .word {
-                        width: 140px;
-                        line-height: 14px;
-                        margin-top: 5px;
-                        font-size: 12px;
-                    }
-                }
-            }
-        }
     }
 }
 </style>

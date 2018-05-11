@@ -10,37 +10,36 @@
                     </li>
                     <li>
                         <p class="key">性别</p>
-                        <p class="value">女</p>
+                       <p class="value" v-if="before.length>0">{{before[0]['性别']!="" ? before[0]['性别'] : '无数据'}}</p>
                     </li>
                     <li>
                         <p class="key">身份证号</p>
                         <p class="value">{{cardno}}</p>
                     </li>
                     <li>
-                        <p class="key">本人电话</p>
-                        <p class="value">{{phone}}</p>
+                        <p class="key">家庭地址</p>
+                        <p class="value" v-if="before.length>0">{{before[0]['家庭地址']!="" ? before[0]['家庭地址'] : '无数据'}}</p>
                     </li>
                     <li>
-                        <p class="key">紧急联系人</p>
-                        <p class="value" v-if="before.length>0">{{before[0]['丈夫姓名']!="" ? before[0]['丈夫姓名'] : '无数据'}}</p>
+                        <p class="key">父亲姓名</p>
+                        <p class="value" v-if="before.length>0">{{before[0]['父亲姓名']!="" ? before[0]['父亲姓名'] : '无数据'}}</p>
                     </li>
                      <li>
-                        <p class="key">紧急联系人电话</p>
-                        <p class="value" v-if="before.length>0">{{before[0]['丈夫电话']!="" ? before[0]['丈夫电话'] : '无数据'}}</p>
+                        <p class="key">父亲电话</p>
+                        <p class="value" v-if="before.length>0">{{before[0]['父亲联系电话']!="" ? before[0]['父亲联系电话'] : '无数据'}}</p>
                     </li>
                 </ul>         
             </div>
             <div class="content">
-                <h2 class="title">孕妇保健记录</h2>
-                <div class="status">产前访视</div>
+                <h2 class="title">儿童保健记录</h2>
                 <ul class="cell_content">
                     <div class="bottom_border">
 
                         <li class="cell" @click="jumpDetail(index,judeType(item),'before')" v-for="(item,index) in before">
                             <div class="circle">
                                 <div class="left left_border">
-                                    <div class="icon" :class="judeType(item) ? 'green greenBmg' : ''">{{index+1}}</div>
-                                    <p class="word">第{{index+1}}次</p>
+                                    <div class="icon" :class="judeType(item) ? 'green greenBmg' : ''" style="fontSize:16px">新</div>
+                                    <p class="word">新生儿</p>
                                 </div>
                             </div>
                             <div class="right">
@@ -51,32 +50,27 @@
                          <li class="cell" @click="jumpDetail(index,judeType(item),'befores')" v-for="(item,index) in befores" >
                             <div class="circle">
                                 <div class="left left_border">
-                                    <div class="icon" :class="judeType(item) ? 'green greenBmg' : ''">{{index+2}}</div>
-                                    <p class="word">第{{index+2}}次</p>
+                                    <div class="icon" :class="judeType(item) ? 'green greenBmg' : ''" style="fontSize:16px">1-2</div>
+                                    <p class="word">1到2岁</p>
                                 </div>
                             </div>
                             <div class="right">
                                 <p class="time">访问日期: <span class="value">{{judeType(item) ? item['随访日期'] : '待定'}}</span></p>
                                 <p class="msg">总体评估:  <span class="value">{{judeType(item) ? item['总体评估异常'] : '未评估'}}</span></p>
                             </div>
-                        </li>                                            
-                    </div>      
-                </ul>
-                <div class="status">产后访视</div>
-                <ul class="cell_content">
-                    <div class="bottom_border">
+                        </li>     
                          <li class="cell" @click="jumpDetail(index,judeType(item),'after')" v-for="(item,index) in after">
                             <div class="circle">
                                 <div class="left left_border">
-                                    <div class="icon" :class="judeType(item) ? 'green greenBmg' : ''">{{index+1}}</div>
-                                    <p class="word">第{{index+2}}次</p>
+                                    <div class="icon" :class="judeType(item) ? 'green greenBmg' : ''" style="fontSize:16px">3-6</div>
+                                    <p class="word">3到6岁</p>
                                 </div>
                             </div>
                             <div class="right">
                                 <p class="time">访问日期: <span class="value">{{judeType(item) ? item['随访日期'] : '待定'}}</span></p>
                                 <p class="msg">总体评估:  <span class="value">{{judeType(item) ? item['总体评估异常'] : '未评估'}}</span></p>
                             </div>
-                        </li>                                                
+                        </li>                                          
                     </div>      
                 </ul>
             </div>
@@ -96,8 +90,7 @@ export default {
             before:JSON.parse(localStorage.getItem('before')) ? JSON.parse(localStorage.getItem('before')) : [],
             befores:JSON.parse(localStorage.getItem('befores')) ? JSON.parse(localStorage.getItem('befores')) : [],
             after:JSON.parse(localStorage.getItem('after')) ? JSON.parse(localStorage.getItem('after')) :[],
-            id:localStorage.getItem('id'),
-            phone:localStorage.getItem('phone')
+            id:localStorage.getItem('id')
         }
     },
     components:{
@@ -113,68 +106,57 @@ export default {
                 return true;
             }
         },
-        request1(){                      //第一次产前随访
+        request1(){                      //新生儿家庭访视
             let _this = this;
-            this.$http.post(URL + 'sd1cqsf',this.$qs.stringify({             
-                //id:'04B8CD65-74AC-4299-8C7F-720810FA3A68'
-                id:this.id
+            this.$http.post(URL + 'sdxsejtfs',this.$qs.stringify({             
+                id:'79D8CFFE-92A9-410A-B2B1-8D0CC03591A8'
+                //id:this.id
             }))
             .then(function(res){
                 let response = res.data;
                 if(response.rtnCode == "0000"){
-                    if(response.data && response.data.sd1cqsf){
-                       let sd1cqsf = response.data.sd1cqsf;
-                        let length = sd1cqsf.length;
+                    if(response.data && response.data.sdxsejtfs){
+                       let sdxsejtfs = response.data.sdxsejtfs;
+                        let length = sdxsejtfs.length;
                         for(let i = 0;i<1-length;i++){
-                            sd1cqsf.push('nothing');
+                            sdxsejtfs.push('nothing');
                         }
-                        _this.before = sd1cqsf;
-                        localStorage.removeItem('before');
-                       localStorage.setItem('before',JSON.stringify(sd1cqsf));
+                        _this.before = sdxsejtfs;
+                       localStorage.setItem('before',JSON.stringify(sdxsejtfs));
                     }
                 }
             })           
         },
-        request2(){    
+        request2(){     //1-2岁健康检查
             let _this = this;
-            this.$http.post(URL + 'sd25cqsf',this.$qs.stringify({
-                //id:'38D2017C-4945-4B33-A2DE-5B399A6B101C'   
+            this.$http.post(URL + 'sd12etjk',this.$qs.stringify({
+                //id:'9DAA3AE7-0FEA-4AB0-B98C-A345AA4C5B9F'   
                 id:this.id            
             }))
             .then(function(res){                
                 let response = res.data;
                 if(response.rtnCode == "0000"){
-                    if(response.data && response.data.sd25cqsf){
-                        let sd25cqsf = response.data.sd25cqsf;
-                        let length = sd25cqsf.length;
-                        for(let i = 0;i<4-length;i++){
-                            sd25cqsf.push('nothing');
-                        }
-                       _this.befores = sd25cqsf;  
-                        localStorage.removeItem('befores');
-                        localStorage.setItem('befores',JSON.stringify(sd25cqsf));       
+                    if(response.data && response.data.sd12etjk){
+                        let sd12etjk = response.data.sd12etjk;
+                       _this.befores = sd12etjk;  
+                        localStorage.setItem('befores',JSON.stringify(sd12etjk));       
                     }
                 }
             });           
         },
-         request3(){                      //产后访视
+         request3(){                      //3-6岁健康检查
             let _this = this;
-            this.$http.post(URL + 'chfsInfo',this.$qs.stringify({
-                //id:'C88B3B8E-1E15-47DA-84BC-F67B4EB39B64'
+            this.$http.post(URL + 'sd36etjk',this.$qs.stringify({
+                //id:'0C1D1EF3-75C8-4CC8-9BFE-A8D219215178'
                 id:this.id
             }))
             .then(function(res){
                 let response = res.data;
                 if(response.rtnCode == "0000"){
-                    if(response.data && response.data.chfs.length>0){
-                       let chfs = response.data.chfs;
-                        let length = chfs.length;
-                        for(let i = 0;i<3-length;i++){
-                            chfs.push('nothing');
-                        }
-                       _this.after = chfs;  
-                       localStorage.removeItem('after');
-                       localStorage.setItem('after',JSON.stringify(chfs));                         
+                    if(response.data && response.data.sd36etjk.length>0){
+                       let sd36etjk = response.data.sd36etjk;
+                       _this.after = sd36etjk;  
+                       localStorage.setItem('after',JSON.stringify(sd36etjk));                         
                     }
                 }
             });           
@@ -188,7 +170,6 @@ export default {
         }
     },
     mounted(){;
-        //localStorage.setItem('id','')
         this.request1();
         this.request2();
         this.request3();

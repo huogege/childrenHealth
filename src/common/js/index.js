@@ -79,7 +79,7 @@ var unitFun = {
   //图片上传
   fileChange: function () {
     imgChange(0);
-    debugger
+    
     function imgChange(index) {
       var Cnv = document.getElementById('myCanvas');
       var Cntx = Cnv.getContext('2d');//获取2d编辑容器
